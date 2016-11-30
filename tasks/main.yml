@@ -1,0 +1,32 @@
+---
+- include: compat.yml
+
+- include: include_vars.yml
+
+#- include: epel.yml
+#  when: ansible_distribution == 'CentOS'
+
+- include: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: install_package_names.yml
+
+- name: Download flink
+  command: wget -O /tmp/{{flink_filename}} {{flink_url}}
+  args:
+    creates: /tmp/{{flink_filename}}
+
+- name: Check if flink is installed
+  stat: path={{flink_install_dir}}
+  register: install
+
+- name: Unpack flink
+  command: tar xvfoz "/tmp/{{flink_filename}}"
+  sudo: True
+  when: (install.stat.isdir is not defined or not install.stat.isdir)
+  args:
+    chdir: "{{flink_install_chdir}}"
+    creates: "{{flink_install_dir}}"
