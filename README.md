@@ -6,6 +6,9 @@ wtanaka.apache-flink
 
 Installs Apache Flink
 
+Requires that you have java installed already, e.g. using
+https://galaxy.ansible.com/wtanaka/oracle-java/
+
 Example Playbook
 ----------------
 

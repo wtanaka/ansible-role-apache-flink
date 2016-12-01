@@ -3,8 +3,9 @@
 
 - include: include_vars.yml
 
-#- include: epel.yml
-#  when: ansible_distribution == 'CentOS'
+# Install EPEL
+- include: epel.yml
+  when: ansible_distribution == 'CentOS'
 
 - include: Debian.yml
   when: ansible_os_family == 'Debian'
@@ -12,6 +13,7 @@
 - include: RedHat.yml
   when: ansible_os_family == 'RedHat'
 
+# Install Monit
 - include: install_package_names.yml
 
 - name: Download flink
@@ -30,3 +32,29 @@
   args:
     chdir: "{{flink_install_chdir}}"
     creates: "{{flink_install_dir}}"
+
+- name: Install monit config for flink
+  sudo: True
+  template: >
+    src=flink-local.conf.j2
+    dest={{flink_monit_conf_dir}}/flink-local.conf
+    owner=root
+  notify: restart monit
+
+- name: Make sure monit is started
+  sudo: True
+  service: name=monit state=started
+  # Does not work in CentOS7 or Fedora in CircleCI
+  when: not (is_integration_test is defined and is_integration_test and
+      (ansible_os_family == "RedHat" or ansible_distribution == "CentOS"))
+
+#- name: Check service
+#  sudo: True
+#  command: monit summary flink
+#  register: flink_status
+#  changed_when: False
+#
+#- name: Start service
+#  sudo: True
+#  command: monit start flink
+#  when: "'Running' not in flink_status.stdout"
