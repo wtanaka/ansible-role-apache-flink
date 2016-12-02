@@ -16,6 +16,8 @@
 # Install Monit
 - include: install_package_names.yml
 
+- include: create_user.yml
+
 - name: Download flink
   command: wget -O /tmp/{{flink_filename}} {{flink_url}}
   args:
@@ -32,6 +34,14 @@
   args:
     chdir: "{{flink_install_chdir}}"
     creates: "{{flink_install_dir}}"
+
+- name: Chown to flink
+  sudo: True
+  file:
+    path: "{{flink_install_dir}}"
+    owner: flink
+    recurse: yes
+    state: directory
 
 - name: Install monit config for flink
   sudo: True
