@@ -4,3 +4,6 @@ flink_filename: "flink-{{flink_version}}-bin-hadoop1-scala_2.10.tgz"
 flink_install_chdir: "/opt"
 flink_install_dir: "{{flink_install_chdir}}/flink-{{flink_version}}"
 flink_url: "http://mirrors.sonic.net/apache/flink/flink-{{flink_version}}/{{flink_filename}}"
+flink_is_master: True
+flink_start_script: "{%if flink_is_master%}start-cluster.sh{%else%}start-local.sh{%endif%}"
+flink_stop_script: "{%if flink_is_master%}start-cluster.sh{%else%}stop-local.sh{%endif%}"
