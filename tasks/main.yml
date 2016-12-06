@@ -46,8 +46,8 @@
 - name: Install monit config for flink
   sudo: True
   template: >
-    src=flink-local.conf.j2
-    dest={{flink_monit_conf_dir}}/flink-local.conf
+    src=flink.conf.j2
+    dest={{flink_monit_conf_dir}}/flink.conf
     owner=root
   notify: restart monit
 
