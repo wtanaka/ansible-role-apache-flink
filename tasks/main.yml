@@ -35,6 +35,18 @@
     chdir: "{{flink_install_chdir}}"
     creates: "{{flink_install_dir}}"
 
+- name: Flink yaml config
+  sudo: True
+  template: >
+    src=flink-conf.yaml.j2
+    dest={{flink_install_dir}}/conf/flink-conf.yaml
+
+- name: Flink slaves config
+  sudo: True
+  template: >
+    src=slaves.j2
+    dest={{flink_install_dir}}/conf/slaves
+
 - name: Chown to flink
   sudo: True
   file:
