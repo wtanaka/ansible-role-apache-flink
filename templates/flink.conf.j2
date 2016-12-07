@@ -1,5 +1,5 @@
 check process flink with pidfile /tmp/flink--jobmanager.pid
-  start program = "/opt/flink-1.1.3/bin/{{flink_start_script}}"
-    as uid flink
-  stop program = "/opt/flink-1.1.3/bin/{{flink_stop_script}}"
-    as uid flink
+  start program = "/usr/bin/env FLINK_SSH_OPTS='-o StrictHostKeyChecking=no' /opt/flink-1.1.3/bin/{{flink_start_script}}"
+    as uid {{flink_user}}
+  stop program = "/usr/bin/env FLINK_SSH_OPTS='-o StrictHostKeyChecking=no' /opt/flink-1.1.3/bin/{{flink_stop_script}}"
+    as uid {{flink_user}}

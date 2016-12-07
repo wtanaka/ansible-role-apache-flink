@@ -10,3 +10,5 @@ flink_stop_script: "{%if flink_is_master%}start-cluster.sh{%else%}stop-local.sh{
 flink_jobmanager_rpc_address: localhost
 flink_jobmanager_rpc_port: 6123
 flink_slaves: ['localhost']
+flink_local_key_pattern: id_rsa.apache-flink
+flink_user: flink

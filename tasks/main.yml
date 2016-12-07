@@ -18,6 +18,47 @@
 
 - include: create_user.yml
 
+- name: ssh-keygen
+  local_action: >
+    command ssh-keygen -t rsa -b 4096
+    -N ""
+    -C "flink@galaxy.wtanaka.apache-flink"
+    -f "{{flink_local_key_pattern}}"
+    creates={{flink_local_key_pattern}}
+
+- name: Create .ssh directory
+  sudo: True
+  file:
+    path: /home/{{flink_user}}/.ssh
+    state: directory
+    owner: "{{flink_user}}"
+    mode: 0700
+
+- name: upload private key
+  sudo: True
+  copy:
+    src: "{{flink_local_key_pattern}}"
+    dest: /home/{{flink_user}}/.ssh/id_rsa
+    owner: "{{flink_user}}"
+    mode: 0600
+  when: flink_is_master
+
+- name: upload public key
+  sudo: True
+  copy:
+    src: "{{flink_local_key_pattern}}.pub"
+    dest: /home/{{flink_user}}/.ssh/id_rsa.pub
+    owner: "{{flink_user}}"
+    mode: 0644
+
+- name: upload authorized_keys
+  sudo: True
+  copy:
+    src: "{{flink_local_key_pattern}}.pub"
+    dest: /home/{{flink_user}}/.ssh/authorized_keys
+    owner: "{{flink_user}}"
+    mode: 0600
+
 - name: Download flink
   command: wget -O /tmp/{{flink_filename}} {{flink_url}}
   args:
@@ -46,12 +87,13 @@
   template: >
     src=slaves.j2
     dest={{flink_install_dir}}/conf/slaves
+  when: flink_is_master
 
 - name: Chown to flink
   sudo: True
   file:
     path: "{{flink_install_dir}}"
-    owner: flink
+    owner: "{{flink_user}}"
     recurse: yes
     state: directory
 
@@ -62,13 +104,15 @@
     dest={{flink_monit_conf_dir}}/flink.conf
     owner=root
   notify: restart monit
+  when: flink_is_master
 
 - name: Make sure monit is started
   sudo: True
   service: name=monit state=started
   # Does not work in CentOS7 or Fedora in CircleCI
-  when: not (is_integration_test is defined and is_integration_test and
-      (ansible_os_family == "RedHat" or ansible_distribution == "CentOS"))
+  when: flink_is_master and not (is_integration_test is defined and
+        is_integration_test and (ansible_os_family == "RedHat" or
+           ansible_distribution == "CentOS"))
 
 #- name: Check service
 #  sudo: True
