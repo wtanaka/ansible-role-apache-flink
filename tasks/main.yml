@@ -97,6 +97,13 @@
     recurse: yes
     state: directory
 
+- name: Create temp directory
+  sudo: True
+  file:
+    path: /tmp/flink
+    owner: "{{flink_user}}"
+    state: directory
+
 - name: Install monit config for flink
   sudo: True
   template: >
