@@ -12,3 +12,5 @@ flink_jobmanager_rpc_port: 6123
 flink_slaves: ['localhost']
 flink_local_key_pattern: id_rsa.apache-flink
 flink_user: flink
+flink_pidfile: "/tmp/flink-{{flink_user}}-{%if flink_is_master%}jobmanager{%else%}taskmanager{%endif%}.pid"
+flink_init_script: "{%if flink_is_master%}/etc/init.d/flink-init.sh{%else%}{{flink_install_dir}}/bin/taskmanager.sh{%endif%}"

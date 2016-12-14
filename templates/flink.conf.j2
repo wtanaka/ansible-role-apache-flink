@@ -1,5 +1,5 @@
-check process flink with pidfile /tmp/flink-{{flink_user}}-jobmanager.pid
-  start program = "/etc/init.d/flink-init.sh start"
+check process flink with pidfile {{flink_pidfile}}
+  start program = "{{flink_init_script}} start"
     as uid {{flink_user}}
-  stop program = "/etc/init.d/flink-init.sh stop"
+  stop program = "{{flink_init_script}} stop"
     as uid {{flink_user}}
