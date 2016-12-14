@@ -104,6 +104,14 @@
     owner: "{{flink_user}}"
     state: directory
 
+- name: Install flink init wrapper
+  sudo: True
+  template: >
+    src=flink-init.sh.j2
+    dest=/etc/init.d/flink-init.sh
+    owner=root
+    mode=0755
+
 - name: Install monit config for flink
   sudo: True
   template: >
