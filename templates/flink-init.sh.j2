@@ -3,12 +3,12 @@
 
 case $1 in
    start)
-      /usr/bin/env FLINK_SSH_OPTS="-o StrictHostKeyChecking=no" \
-         /opt/flink-1.1.3/bin/{{flink_start_script}} &
+      kill `cat "/tmp/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"`
+      : > "/tmp/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"
+      env USER={{flink_user}} {{flink_install_dir}}/bin/{{flink_start_stop_script}}.sh {{flink_start_args}}
       ;;
     stop)  
-      /usr/bin/env FLINK_SSH_OPTS="-o StrictHostKeyChecking=no" \
-         /opt/flink-1.1.3/bin/{{flink_stop_script}} &
+      env USER={{flink_user}} {{flink_install_dir}}/bin/{{flink_start_stop_script}}.sh {{flink_stop_args}}
       ;;
     *)  
       echo "usage: flink-init.sh {start|stop}" ;;

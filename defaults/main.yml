@@ -5,12 +5,13 @@ flink_install_chdir: "/opt"
 flink_install_dir: "{{flink_install_chdir}}/flink-{{flink_version}}"
 flink_url: "http://mirrors.sonic.net/apache/flink/flink-{{flink_version}}/{{flink_filename}}"
 flink_is_master: True
-flink_start_script: "{%if flink_is_master%}start-cluster.sh{%else%}start-local.sh{%endif%}"
-flink_stop_script: "{%if flink_is_master%}stop-cluster.sh{%else%}stop-local.sh{%endif%}"
+flink_start_stop_script: "{%if flink_is_master%}jobmanager{%else%}taskmanager{%endif%}"
+flink_start_args: "start{%if flink_is_master%} cluster{%endif%}"
+flink_stop_args: "stop"
 flink_jobmanager_rpc_address: localhost
 flink_jobmanager_rpc_port: 6123
 flink_slaves: ['localhost']
 flink_local_key_pattern: id_rsa.apache-flink
 flink_user: flink
-flink_pidfile: "/tmp/flink-{{flink_user}}-{%if flink_is_master%}jobmanager{%else%}taskmanager{%endif%}.pid"
-flink_init_script: "{%if flink_is_master%}/etc/init.d/flink-init.sh{%else%}{{flink_install_dir}}/bin/taskmanager.sh{%endif%}"
+flink_pidfile: "/tmp/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"
+flink_init_script: "/etc/init.d/flink-init.sh"
