@@ -18,47 +18,6 @@
 
 - include: create_user.yml
 
-- name: ssh-keygen
-  local_action: >
-    command ssh-keygen -t rsa -b 4096
-    -N ""
-    -C "flink@galaxy.wtanaka.apache-flink"
-    -f "{{flink_local_key_pattern}}"
-    creates={{flink_local_key_pattern}}
-
-- name: Create .ssh directory
-  sudo: True
-  file:
-    path: /home/{{flink_user}}/.ssh
-    state: directory
-    owner: "{{flink_user}}"
-    mode: 0700
-
-- name: upload private key
-  sudo: True
-  copy:
-    src: "{{flink_local_key_pattern}}"
-    dest: /home/{{flink_user}}/.ssh/id_rsa
-    owner: "{{flink_user}}"
-    mode: 0600
-  when: flink_is_master
-
-- name: upload public key
-  sudo: True
-  copy:
-    src: "{{flink_local_key_pattern}}.pub"
-    dest: /home/{{flink_user}}/.ssh/id_rsa.pub
-    owner: "{{flink_user}}"
-    mode: 0644
-
-- name: upload authorized_keys
-  sudo: True
-  copy:
-    src: "{{flink_local_key_pattern}}.pub"
-    dest: /home/{{flink_user}}/.ssh/authorized_keys
-    owner: "{{flink_user}}"
-    mode: 0600
-
 - name: Download flink
   command: wget -O /tmp/{{flink_filename}} {{flink_url}}
   args:
