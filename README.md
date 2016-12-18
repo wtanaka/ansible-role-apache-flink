@@ -14,7 +14,9 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - wtanaka.apache-flink
+         - role: wtanaka.apache-flink
+           # Optional flink version number
+           flink_version: "1.1.2"
 
 License
 -------
