@@ -146,3 +146,7 @@ jobmanager.web.port: 8081
 # directory (see above) before configuring the storageDir.
 #
 # recovery.zookeeper.storageDir: hdfs:///recovery
+
+{% for key, value in flink_other_config.iteritems() %}
+"{{key}}": {{value}}
+{% endfor %}
