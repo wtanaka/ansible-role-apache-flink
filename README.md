@@ -17,6 +17,9 @@ Example Playbook
          - role: wtanaka.apache-flink
            # Optional flink version number
            flink_version: "1.1.2"
+           # Optional other flink config
+           flink_other_config:
+             akka.ask.timeout: "30s"
 
 License
 -------
