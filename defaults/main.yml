@@ -19,5 +19,10 @@ flink_local_key_pattern: id_rsa.apache-flink
 flink_user: flink
 flink_pidfile: "/tmp/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"
 flink_init_script: "/etc/init.d/flink-init.sh"
+flink_jobmanager_heap_mb: 256
+flink_jobmanager_web_port: 8081
+flink_parallelism_default: 1
+flink_taskmanager_heap_mb: 512
+flink_taskmanager_memory_preallocate: "false"
 flink_taskmanager_number_of_task_slots: 1
 flink_other_config: {}
