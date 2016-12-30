@@ -20,6 +20,7 @@ Example Playbook
            # Optional other flink config
            flink_other_config:
              akka.ask.timeout: "30s"
+             jobmanager.web.history: 100
 
 License
 -------
