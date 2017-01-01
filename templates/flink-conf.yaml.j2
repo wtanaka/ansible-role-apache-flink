@@ -147,6 +147,12 @@ jobmanager.web.port: {{flink_jobmanager_web_port}}
 #
 # recovery.zookeeper.storageDir: hdfs:///recovery
 
+{# It is important that the "env.log.dir" not be surrounded by quotes,
+as it is read by a shell script #}
+{% if flink_env_log_dir is defined %}
+env.log.dir: {{flink_env_log_dir}}
+{% endif %}
+
 {% for key, value in flink_other_config.iteritems() %}
 "{{key}}": {{value}}
 {% endfor %}

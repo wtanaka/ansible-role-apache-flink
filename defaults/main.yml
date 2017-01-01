@@ -25,4 +25,5 @@ flink_parallelism_default: 1
 flink_taskmanager_heap_mb: 512
 flink_taskmanager_memory_preallocate: "false"
 flink_taskmanager_number_of_task_slots: 1
+flink_env_log_dir: /var/log/flink
 flink_other_config: {}

@@ -63,6 +63,13 @@
     owner: "{{flink_user}}"
     state: directory
 
+- name: Create log directory
+  sudo: True
+  file:
+    path: "{{flink_env_log_dir}}"
+    owner: "{{flink_user}}"
+    state: directory
+
 - name: Install flink init wrapper
   sudo: True
   template: >
