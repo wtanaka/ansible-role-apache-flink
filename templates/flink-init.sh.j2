@@ -3,8 +3,8 @@
 
 case $1 in
    start)
-      kill `cat "/tmp/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"`
-      : > "/tmp/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"
+      kill `cat "{{flink_env_pid_dir}}/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"`
+      : > "{{flink_env_pid_dir}}/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"
       env USER={{flink_user}} {{flink_install_dir}}/bin/{{flink_start_stop_script}}.sh {{flink_start_args}}
       ;;
     stop)  

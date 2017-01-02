@@ -56,19 +56,16 @@
     recurse: yes
     state: directory
 
-- name: Create temp directory
+- name: Create tmp, log and pid directory
   sudo: True
   file:
-    path: /tmp/flink
+    path: "{{item}}"
     owner: "{{flink_user}}"
     state: directory
-
-- name: Create log directory
-  sudo: True
-  file:
-    path: "{{flink_env_log_dir}}"
-    owner: "{{flink_user}}"
-    state: directory
+  with_items:
+    - /tmp/flink
+    - "{{flink_env_log_dir}}"
+    - "{{flink_env_pid_dir}}"
 
 - name: Install flink init wrapper
   sudo: True
