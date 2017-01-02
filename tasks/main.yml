@@ -18,22 +18,7 @@
 
 - include: create_user.yml
 
-- name: Download flink
-  command: wget -O /tmp/{{flink_filename}} {{flink_url}}
-  args:
-    creates: /tmp/{{flink_filename}}
-
-- name: Check if flink is installed
-  stat: path={{flink_install_dir}}
-  register: install
-
-- name: Unpack flink
-  command: tar xvfoz "/tmp/{{flink_filename}}"
-  sudo: True
-  when: (install.stat.isdir is not defined or not install.stat.isdir)
-  args:
-    chdir: "{{flink_install_chdir}}"
-    creates: "{{flink_install_dir}}"
+- include: untar_flink.yml
 
 - name: Flink yaml config
   sudo: True
@@ -47,14 +32,6 @@
     src=slaves.j2
     dest={{flink_install_dir}}/conf/slaves
   when: flink_is_master
-
-- name: Chown to flink
-  sudo: True
-  file:
-    path: "{{flink_install_dir}}"
-    owner: "{{flink_user}}"
-    recurse: yes
-    state: directory
 
 - name: Create tmp, log and pid directory
   sudo: True

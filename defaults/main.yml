@@ -4,9 +4,10 @@ flink_version: "1.1.3"
 # http://apache.cs.utah.edu/flink
 flink_hadoop_version: "1"
 flink_scala_version: "2.10"
+flink_tmp_unpack_dir: "/tmp/flink-{{flink_version}}"
 flink_filename: "flink-{{flink_version}}-bin-hadoop{{flink_hadoop_version}}-scala_{{flink_scala_version}}.tgz"
 flink_install_chdir: "/opt"
-flink_install_dir: "{{flink_install_chdir}}/flink-{{flink_version}}"
+flink_install_dir: "{{flink_install_chdir}}/flink"
 flink_url: "http://mirrors.sonic.net/apache/flink/flink-{{flink_version}}/{{flink_filename}}"
 flink_is_master: True
 flink_start_stop_script: "{%if flink_is_master%}jobmanager{%else%}taskmanager{%endif%}"

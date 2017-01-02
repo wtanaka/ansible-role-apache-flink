@@ -1,0 +1,40 @@
+---
+- name: Check if flink is installed
+  stat: path={{flink_install_dir}}
+  register: install
+
+- name: Download flink
+  command: wget -O /tmp/{{flink_filename}} {{flink_url}}
+  args:
+    creates: /tmp/{{flink_filename}}
+  when: (install.stat.isdir is not defined or not install.stat.isdir)
+
+- name: Make unpack directory
+  sudo: True
+  file:
+    path: "{{flink_tmp_unpack_dir}}"
+    owner: "{{flink_user}}"
+    state: directory
+  when: (install.stat.isdir is not defined or not install.stat.isdir)
+
+- name: Unpack flink
+  command: tar xvfoz "/tmp/{{flink_filename}}" --strip-components 1
+  sudo: True
+  when: (install.stat.isdir is not defined or not install.stat.isdir)
+  args:
+    chdir: "{{flink_tmp_unpack_dir}}"
+
+- name: Move into place
+  command: mv {{flink_tmp_unpack_dir}} {{flink_install_dir}}
+  sudo: True
+  when: (install.stat.isdir is not defined or not install.stat.isdir)
+  args:
+    creates: "{{flink_install_dir}}"
+
+- name: Chown to flink
+  sudo: True
+  file:
+    path: "{{flink_install_dir}}"
+    owner: "{{flink_user}}"
+    recurse: yes
+    state: directory
