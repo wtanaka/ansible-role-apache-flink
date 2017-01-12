@@ -3,6 +3,18 @@
   stat: path={{flink_install_dir}}
   register: install
 
+- name: Download flink on local
+  when: flink_local_download_cache is defined
+  local_action: command wget -P {{flink_local_download_cache}} {{flink_url}}
+  args:
+    creates: "{{flink_local_download_cache}}/{{flink_filename}}"
+
+- name: Copy from local to host
+  when: flink_local_download_cache is defined
+  copy:
+    src: "{{flink_local_download_cache}}/{{flink_filename}}"
+    dest: /tmp/{{flink_filename}}
+
 - name: Download flink
   command: wget -O /tmp/{{flink_filename}} {{flink_url}}
   args:

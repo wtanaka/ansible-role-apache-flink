@@ -8,6 +8,11 @@ flink_tmp_unpack_dir: "/tmp/flink-{{flink_version}}"
 flink_filename: "flink-{{flink_version}}-bin-hadoop{{flink_hadoop_version}}-scala_{{flink_scala_version}}.tgz"
 flink_install_chdir: "/opt"
 flink_install_dir: "{{flink_install_chdir}}/flink"
+# Set this directory to download and cache tarball onto local machine,
+# for when the network connection between local and host is faster
+# than between host and internet, and if role will be run for several
+# hosts.
+# flink_local_download_cache: .
 flink_url: "http://mirrors.sonic.net/apache/flink/flink-{{flink_version}}/{{flink_filename}}"
 flink_is_master: True
 flink_start_stop_script: "{%if flink_is_master%}jobmanager{%else%}taskmanager{%endif%}"
