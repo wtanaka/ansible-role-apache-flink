@@ -4,6 +4,7 @@
   command: id {{flink_user}}
   register: id_result
   ignore_errors: True
+  changed_when: False
 
 - name: Create flink user
   sudo: True
