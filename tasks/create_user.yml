@@ -3,6 +3,7 @@
 - name: Check if flink user exists
   command: id {{flink_user}}
   register: id_result
+  ignore_errors: True
 
 - name: Create flink user
   sudo: True
