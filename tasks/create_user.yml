@@ -1,6 +1,14 @@
 ---
+# Workaround https://github.com/ansible/ansible/issues/6854
+- name: Check if flink user exists
+  command: id {{flink_user}}
+  register: id_result
+  ignore_errors: True
+  changed_when: False
+
 - name: Create flink user
   sudo: True
   user:
     name: "{{flink_user}}"
     comment: "Flink user"
+  when: id_result|failed
