@@ -23,6 +23,7 @@ flink_jobmanager_rpc_port: 6123
 flink_slaves: ['localhost']
 flink_local_key_pattern: id_rsa.apache-flink
 flink_user: flink
+flink_user_shell: "/bin/bash"
 flink_init_script: "/etc/init.d/flink-init.sh"
 flink_jobmanager_heap_mb: 256
 flink_jobmanager_web_port: 8081
