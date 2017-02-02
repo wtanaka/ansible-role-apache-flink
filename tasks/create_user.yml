@@ -11,4 +11,6 @@
   user:
     name: "{{flink_user}}"
     comment: "Flink user"
+    shell: "{{flink_user_shell}}"
+    password: "*"
   when: id_result|failed
