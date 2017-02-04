@@ -13,7 +13,8 @@ flink_install_dir: "{{flink_install_chdir}}/flink"
 # than between host and internet, and if role will be run for several
 # hosts.
 # flink_local_download_cache: .
-flink_url: "http://mirrors.sonic.net/apache/flink/flink-{{flink_version}}/{{flink_filename}}"
+flink_url_base: "http://archive.apache.org/dist/flink/"
+flink_url: "{{flink_url_base}}/flink-{{flink_version}}/{{flink_filename}}"
 flink_is_master: True
 flink_start_stop_script: "{%if flink_is_master%}jobmanager{%else%}taskmanager{%endif%}"
 flink_start_args: "start{%if flink_is_master%} cluster{%endif%}"
