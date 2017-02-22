@@ -16,11 +16,14 @@ Example Playbook
       roles:
          - role: wtanaka.apache-flink
            # Optional flink version number
-           flink_version: "1.1.2"
+           flink_version: "1.1.4"
            # Optional other flink config
            flink_other_config:
              akka.ask.timeout: "30s"
              jobmanager.web.history: 100
+
+The full set of configuration options available are visible in
+[defaults/main.yml](defaults/main.yml)
 
 License
 -------
