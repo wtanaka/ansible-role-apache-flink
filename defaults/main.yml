@@ -1,8 +1,7 @@
 ---
-flink_version: "1.1.4"
-# Other choices include 2, 24, 26, 27.  Browse through
-# http://apache.cs.utah.edu/flink
-flink_hadoop_version: "1"
+flink_version: "1.2.0"
+# Possible choices: 1, 2, 24, 26, 27
+flink_hadoop_version: "2"
 flink_scala_version: "2.10"
 flink_tmp_unpack_dir: "/tmp/flink-{{flink_version}}"
 flink_filename: "flink-{{flink_version}}-bin-hadoop{{flink_hadoop_version}}-scala_{{flink_scala_version}}.tgz"
