@@ -1,0 +1,43 @@
+---
+driver:
+  name: docker
+  use_cache: true
+  use_sudo: false
+
+platforms:
+- name: ubuntu-16.04
+  driver_config:
+    image: ubuntu:16.04
+
+provisioner:
+  name: ansible_push
+  ansible_playbook_bin: ansible-playbook
+  idempotency_test: true
+  playbook: playbook.yml
+  run_options: --network=flink_kitchen_nw
+  support_older_version: true
+  use_sudo: <% if ENV["TRAVIS"] then true else false end %>
+  verbose: ""
+
+suites:
+ - name: master
+   driver:
+     hostname: flink-kitchen-master
+     instance_name: flink-kitchen-master
+     #forward:
+       #- 16123:6123  # Flink
+       #- 18081:8081  # Flink web interface
+       #- 19092:9092  # Kafka
+       #- 12181:2181  # Zookeeper
+ - name: slave1
+   driver:
+     hostname: flink-kitchen-slave1
+     instance_name: flink-kitchen-slave1
+     links:
+     - flink-kitchen-master:flink-kitchen-master
+ - name: slave2
+   driver:
+     hostname: flink-kitchen-slave2
+     instance_name: flink-kitchen-slave2
+     links:
+     - flink-kitchen-master:flink-kitchen-master
