@@ -16,3 +16,5 @@ test:
         2.2.1.0"
         DOCKER_IMAGES="centos:7 debian:8 fedora:23 ubuntu:14.04"
         sh -x
+      - >
+        cd kitchen; make test
