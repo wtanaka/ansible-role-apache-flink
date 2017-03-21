@@ -10,4 +10,8 @@ describe "Integration" do
 #   describe command('echo stat | nc localhost 2181') do
 #      its(:stdout) { should contain('Mode: ') }
 #   end
+
+   describe file('/etc/init.d/flink-init.sh') do
+      its(:content) { should match /taskmanager/ }
+   end
 end
