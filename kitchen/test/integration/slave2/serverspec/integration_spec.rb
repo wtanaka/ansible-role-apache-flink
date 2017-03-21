@@ -14,4 +14,8 @@ describe "Integration" do
    describe file('/etc/init.d/flink-init.sh') do
       its(:content) { should match /taskmanager/ }
    end
+
+   describe command('/opt/flink/bin/flink run /opt/flink/examples/streaming/WordCount.jar') do
+      its(:stdout) { should match /Job execution switched to status FINISHED/ }
+   end
 end
