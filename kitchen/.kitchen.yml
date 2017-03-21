@@ -29,15 +29,24 @@ suites:
        #- 18081:8081  # Flink web interface
        #- 19092:9092  # Kafka
        #- 12181:2181  # Zookeeper
+   provisioner:
+     mygroup:
+     - master
  - name: slave1
    driver:
      hostname: flink-kitchen-slave1
      instance_name: flink-kitchen-slave1
      links:
      - flink-kitchen-master:flink-kitchen-master
+   provisioner:
+     mygroup:
+     - slave
  - name: slave2
    driver:
      hostname: flink-kitchen-slave2
      instance_name: flink-kitchen-slave2
      links:
      - flink-kitchen-master:flink-kitchen-master
+   provisioner:
+     mygroup:
+     - slave
