@@ -15,6 +15,10 @@ describe "Integration" do
       its(:content) { should match /taskmanager/ }
    end
 
+   describe command('monit status flink') do
+      its(:stdout) { should match /status.*Running/ }
+   end
+
    describe command('/opt/flink/bin/flink run /opt/flink/examples/streaming/WordCount.jar') do
       its(:stdout) { should match /Job execution switched to status FINISHED/ }
    end

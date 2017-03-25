@@ -14,4 +14,8 @@ describe "Integration" do
    describe file('/etc/init.d/flink-init.sh') do
       its(:content) { should match /taskmanager/ }
    end
+
+   describe command('monit status flink') do
+      its(:stdout) { should match /status.*Running/ }
+   end
 end
