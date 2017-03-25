@@ -11,6 +11,10 @@ describe "Integration" do
 #      its(:stdout) { should contain('Mode: ') }
 #   end
 
+   describe command('monit status flink') do
+      its(:stdout) { should match /status.*Running/ }
+   end
+
    describe command('curl -v -s -k localhost:8081') do
       its(:stderr) { should match /200 OK/ }
       its(:stdout) { should contain('Apache Flink Dashboard') }
