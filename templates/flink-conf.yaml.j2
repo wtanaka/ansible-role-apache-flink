@@ -157,5 +157,5 @@ env.pid.dir: {{flink_env_pid_dir}}
 {% endif %}
 
 {% for key, value in flink_other_config.iteritems() %}
-"{{key}}": {{value}}
+{{key}}: {{value}}
 {% endfor %}
