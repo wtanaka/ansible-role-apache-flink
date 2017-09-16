@@ -49,6 +49,67 @@ Example values:
 * `.`
 * `/tmp`
 
+### `flink_log4j_rootlogger`
+
+Root logger settings for user code and flink code
+
+Default: `"INFO, file"`
+
+### `flink_log4j_logger_akka`
+
+Property value for `log4j.logger.akka`
+
+### `flink_log4j_logger_org_apache_kafka`
+
+Property value for `log4j.logger.org.apache.kafka`
+
+### `flink_log4j_logger_org_apache_hadoop`
+
+Property value for `log4j.logger.org.apache.hadoop`
+
+### `flink_log4j_logger_org_apache_zookeeper`
+
+Property value for `log4j.logger.org.apache.zookeeper`
+
+### `flink_log4j_appender_file`
+
+Property value for `log4j.appender.file`
+
+### `flink_log4j_appender_file_file`
+
+Property value for `log4j.appender.file.file`
+
+By default this gets set to the string `"${log.file}"` which flink startup scripts overwrite
+
+### `flink_log4j_appender_file_append`
+
+Property value for `log4j.appender.file.append`
+
+### `flink_log4j_appender_file_layout`
+
+Property value for `log4j.appender.file.layout`
+
+### `flink_log4j_appender_file_layout_ConversionPattern`
+
+Property value for `log4j.appender.file.layout.ConversionPattern`
+
+### `flink_log4j_logger_org_jboss_netty_channel_DefaultChannelPipeline`
+
+Property value for `log4j.logger.org.jboss.netty.channel.DefaultChannelPipeline`
+
+This is set to `ERROR, file` by default to suppress the irrelevant and wrong warnings from Netty channel handler
+
+### `flink_log4j_extra`
+
+This is a dictionary of extra key/value pairs to add into the log4j.properties file.
+
+For example, to _only_ change Flink's logging, you could use:
+
+```
+flink_log4j_extra:
+  "log4j.logger.org.apache.flink": "INFO"
+```
+
 ### All variables
 
 The full set of configuration options available are visible in
