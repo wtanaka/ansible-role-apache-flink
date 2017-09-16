@@ -1,0 +1,25 @@
+# This affects logging for both user code and Flink
+log4j.rootLogger={{flink_log4j_rootlogger}}
+
+# The following lines keep the log level of common libraries/connectors on
+# log level INFO. The root logger does not override this. You have to manually
+# change the log levels here.
+log4j.logger.akka={{flink_log4j_logger_akka}}
+log4j.logger.org.apache.kafka={{flink_log4j_logger_org_apache_kafka}}
+log4j.logger.org.apache.hadoop={{flink_log4j_logger_org_apache_hadoop}}
+log4j.logger.org.apache.zookeeper={{flink_log4j_logger_org_apache_zookeeper}}
+
+# Log all infos in the given file
+log4j.appender.file={{flink_log4j_appender_file}}
+log4j.appender.file.file={{flink_log4j_appender_file_file}}
+log4j.appender.file.append={{flink_log4j_appender_file_append}}
+log4j.appender.file.layout={{flink_log4j_appender_file_layout}}
+log4j.appender.file.layout.ConversionPattern={{flink_log4j_appender_file_layout_ConversionPattern}}
+
+# Suppress the irrelevant (wrong) warnings from the Netty channel handler
+log4j.logger.org.jboss.netty.channel.DefaultChannelPipeline={{flink_log4j_logger_org_jboss_netty_channel_DefaultChannelPipeline}}
+
+# Extra configuration
+{% for key, value in flink_log4j_extra.iteritems() %}
+{{key}}={{value}}
+{% endfor %}

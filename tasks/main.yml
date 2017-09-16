@@ -33,6 +33,12 @@
     dest={{flink_install_dir}}/conf/slaves
   when: flink_is_master
 
+- name: Flink log4j properties
+  sudo: True
+  template: >
+    src=log4j.properties.j2
+    dest={{flink_install_log4j_properties}}
+
 - name: Create tmp, log and pid directory
   sudo: True
   file:

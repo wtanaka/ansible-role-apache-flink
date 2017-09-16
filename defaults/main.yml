@@ -7,6 +7,7 @@ flink_tmp_unpack_dir: "/tmp/flink-{{flink_version}}"
 flink_filename: "flink-{{flink_version}}-bin-hadoop{{flink_hadoop_version}}-scala_{{flink_scala_version}}.tgz"
 flink_install_chdir: "/opt"
 flink_install_dir: "{{flink_install_chdir}}/flink"
+flink_install_log4j_properties: "{{flink_install_dir}}/conf/log4j.properties"
 # Set this directory to download and cache tarball onto local machine,
 # for when the network connection between local and host is faster
 # than between host and internet, and if role will be run for several
@@ -22,6 +23,31 @@ flink_jobmanager_rpc_address: localhost
 flink_jobmanager_rpc_port: 6123
 flink_slaves: ['localhost']
 flink_local_key_pattern: id_rsa.apache-flink
+# This affects logging for both user code and Flink
+flink_log4j_rootlogger: "INFO, file"
+# The following lines keep the log level of common
+# libraries/connectors on log level INFO. The root logger does not
+# override this. You have to manually change the log levels here.
+flink_log4j_logger_akka: INFO
+flink_log4j_logger_org_apache_kafka: INFO
+flink_log4j_logger_org_apache_hadoop: INFO
+flink_log4j_logger_org_apache_zookeeper: INFO
+
+# Log all infos in the given file
+flink_log4j_appender_file: "org.apache.log4j.FileAppender"
+flink_log4j_appender_file_file: "${log.file}"
+flink_log4j_appender_file_append: "false"
+flink_log4j_appender_file_layout: "org.apache.log4j.PatternLayout"
+flink_log4j_appender_file_layout_ConversionPattern: "%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %-60c %x - %m%n"
+
+# Suppress the irrelevant (wrong) warnings from the Netty channel handler
+flink_log4j_logger_org_jboss_netty_channel_DefaultChannelPipeline: "ERROR, file"
+
+flink_log4j_extra: {}
+# Add this key into this dictionary if you want to _only_ change Flink's
+# logging.  Add other keys if you want other configuration lines added
+#  "log4j.logger.org.apache.flink": "INFO"
+
 flink_user: flink
 flink_user_shell: "/bin/bash"
 flink_init_script: "/etc/init.d/flink-init.sh"
