@@ -61,3 +61,6 @@ flink_env_log_dir: /var/log/flink
 flink_env_pid_dir: /var/run/flink
 flink_pidfile: "{{flink_env_pid_dir}}/flink-{{flink_user}}-{{flink_start_stop_script}}.pid"
 flink_other_config: {}
+
+# Config Flink's akka params
+flink_akka_framesize: "10485760b"

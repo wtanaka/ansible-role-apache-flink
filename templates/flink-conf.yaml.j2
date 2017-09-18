@@ -159,3 +159,15 @@ env.pid.dir: {{flink_env_pid_dir}}
 {% for key, value in flink_other_config.iteritems() %}
 "{{key}}": {{value}}
 {% endfor %}
+
+
+#==============================================================================
+# Distributed Coordination (via Akka)
+#==============================================================================
+
+# `akka.framesize`: Maximum size of messages which are sent between the
+# JobManager and the TaskManagers. If Flink fails because messages exceed this
+# limit, then you should increase it. The message size requires a size-unit
+# specifier (DEFAULT: **10485760b**).
+
+akka.framesize: {{ flink_akka_framesize }}
