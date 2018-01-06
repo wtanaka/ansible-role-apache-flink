@@ -6,6 +6,8 @@
 - name: Download flink on local
   when: flink_local_download_cache is defined
   local_action: command wget -P {{flink_local_download_cache}} {{flink_url}}
+  register: result_download_flink_local
+  until: result_download_flink_local|success
   args:
     creates: "{{flink_local_download_cache}}/{{flink_filename}}"
 
@@ -17,6 +19,8 @@
 
 - name: Download flink
   command: wget -O /tmp/{{flink_filename}} {{flink_url}}
+  register: result_download_flink
+  until: result_download_flink|success
   args:
     creates: /tmp/{{flink_filename}}
   when: (install.stat.isdir is not defined or not install.stat.isdir)
