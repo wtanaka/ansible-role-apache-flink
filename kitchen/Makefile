@@ -12,7 +12,7 @@ test: bundle galaxy
 galaxy: pip
 	(. venv/bin/activate; \
 		allpids=""; \
-		for i in requirements/*.txt; do \
+		for i in requirements/*.yml; do \
 			ansible-galaxy install --force --ignore-errors \
 				-r "$$i" -p roles/& \
 			pid=$$!; \
