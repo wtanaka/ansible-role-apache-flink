@@ -1,10 +1,10 @@
 ---
 flink_version: "1.2.0"
-# Possible choices: 1, 2, 24, 26, 27
+# Possible choices: 1, 2, 24, 26, 27, 28
 flink_hadoop_version: "2"
 flink_scala_version: "2.10"
 flink_tmp_unpack_dir: "/tmp/flink-{{flink_version}}"
-flink_filename: "flink-{{flink_version}}-bin-hadoop{{flink_hadoop_version}}-scala_{{flink_scala_version}}.tgz"
+flink_filename: "flink-{{flink_version}}-bin{{ '-hadoop' + flink_hadoop_version if flink_hadoop_version else '' }}-scala_{{flink_scala_version}}.tgz"
 flink_install_chdir: "/opt"
 flink_install_dir: "{{flink_install_chdir}}/flink"
 flink_install_log4j_properties: "{{flink_install_dir}}/conf/log4j.properties"

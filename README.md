@@ -28,10 +28,10 @@ Example Playbook
 
 These control the .tgz file that is downloaded from apache.  The filename that is downloaded from apache looks like:
 
-`flink-{{flink_version}}-bin-hadoop{{flink_hadoop_version}}-scala_{{flink_scala_version}}.tgz`
+`flink-{{flink_version}}-bin{{ '-hadoop' + flink_hadoop_version if flink_hadoop_version else '' }}-scala_{{flink_scala_version}}.tgz`
 
 * Examples of `flink_version`: "1.1.2", "1.2.0"
-* Examples of `flink_hadoop_version`: "1", "2", "24", "26", "27"
+* Examples of `flink_hadoop_version`: "", "1", "2", "24", "26", "27", "28"
 * Examples of `flink_version`: "1.1.2", "1.2.0"
 
 Browse [http://archive.apache.org/dist/flink/](http://archive.apache.org/dist/flink/) for possible values
