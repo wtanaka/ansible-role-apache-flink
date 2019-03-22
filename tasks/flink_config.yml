@@ -1,0 +1,63 @@
+---
+- name: Flink yaml config
+  template: >
+    src=flink-conf.yaml.j2
+    dest={{flink_install_dir}}/conf/flink-conf.yaml
+
+- name: Flink slaves config
+  template: >
+    src=slaves.j2
+    dest={{flink_install_dir}}/conf/slaves
+  when: flink_is_master
+
+- name: Flink log4j properties
+  template: >
+    src=log4j.properties.j2
+    dest={{flink_install_log4j_properties}}
+
+- name: Create tmp, log and pid directory
+  file:
+    path: "{{item}}"
+    owner: "{{flink_user}}"
+    state: directory
+  with_items:
+    - /tmp/flink
+    - "{{flink_env_log_dir}}"
+    - "{{flink_env_pid_dir}}"
+
+- name: Install flink init wrapper
+  template: >
+    src=flink-init.sh.j2
+    dest=/etc/init.d/flink-init.sh
+    owner=root
+    mode=0755
+
+- name: Install monit config for flink
+  template: >
+    src=flink.conf.j2
+    dest={{flink_monit_conf_dir}}/flink.conf
+    owner=root
+  register: monit_config_result
+
+- name: Make sure monit is started
+  service: name=monit state=started
+  # Does not work in CentOS7 or Fedora in CircleCI
+  when: not (is_integration_test is defined and
+        is_integration_test and (ansible_os_family == "RedHat" or
+           ansible_distribution == "CentOS"))
+
+- name: restart monit
+  service: name=monit state=restarted
+  when: not (is_integration_test is defined and is_integration_test and
+      (ansible_os_family == "RedHat" or ansible_distribution == "CentOS"))
+      and monit_config_result.changed
+
+#- name: Check service
+#  command: monit summary flink
+#  register: flink_status
+#  changed_when: False
+#
+#- name: Start service
+#  command: monit start flink
+#  when: "'Running' not in flink_status.stdout"
+
